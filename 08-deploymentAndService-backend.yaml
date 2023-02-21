@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: main-project
+  name: backend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nestjs
+  template:
+    metadata:
+      labels:
+        app: nestjs
+    spec:
+      containers:
+        - name: nestjs
+          image: jfer11/public-back:v1
+          ports:
+            - containerPort: 5000
+          # imagePullPolicy: Always
+          command: ["/bin/sh","-c"]
+          args: ["sleep 5; npm install && prisma generate && prisma migrate dev --name init && npm run start:dev"]
+          envFrom:
+            - configMapRef:
+                name: backend-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: main-project
+  name: backend-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 5000  # TODO Change it later to 5001
+      targetPort: 5000
+      nodePort: 30000
+  selector:
+    app: nestjs
