@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: nestjs
-          image: jfer11/public-back:v1
+          image: thesis-backend:v1-release
           ports:
             - containerPort: 5000
           # imagePullPolicy: Always
