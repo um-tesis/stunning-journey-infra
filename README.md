@@ -3,7 +3,12 @@
 ### Useful commands
 1. kc logs deployment/backend-deployment -n main-project
 2. kc get events --all-namespaces  --sort-by='.metadata.creationTimestamp'
-3. minikube service backend-service -n main-project
+4. minikube image pull jfer11/thesis-backend:vX-release
+5. kc get pod -o wide -n main-project
+6. minikube service backend-service -n main-project --url
+7. kubectl logs --selector app=nestjs -n main-project
+
+como verga actualizar correctamente las envs en postman?
 
 ### How to build and push an image to dockerhub
 `WORKING DIR .`
