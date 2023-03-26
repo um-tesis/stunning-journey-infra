@@ -11,6 +11,7 @@ yaml_files=(
     06-service-postgres.yaml
     07-configMap-backend.yaml
     08-deploymentAndService-backend.yaml
+    09-deploymentAndService-frontend.yaml
 )
 
 for file in "${yaml_files[@]}"
