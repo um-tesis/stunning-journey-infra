@@ -15,10 +15,10 @@ spec:
     spec:
       containers:
         - name: nextjs
-          image: jfer11/thesis-frontend:v1-release
+          image: jfer11/thesis-frontend:latest
           ports:
             - containerPort: 3000
-          # imagePullPolicy: Always
+          imagePullPolicy: Always
           command: ["npm","run","start"]
           # envFrom:
           #   - configMapRef:
