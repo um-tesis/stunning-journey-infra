@@ -20,7 +20,7 @@ Here are some useful commands for working with Kubernetes and Docker.
 
 #### Troubleshooting
 
-- If an image is too large to load in minikube when running `kc apply -f <filename>`, try running:
+- If an image is too large to load in minikube when running `kc apply -f ./kubernetes/<filename>`, try running:
 
   `minikube image pull jfer11/thesis-backend:vX-release`
 
