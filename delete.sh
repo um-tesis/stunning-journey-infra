@@ -3,6 +3,7 @@
 set -e
 
 yaml_files=(
+    09-deploymentAndService-frontend.yaml
     08-deploymentAndService-backend.yaml
     07-configMap-backend.yaml
     06-service-postgres.yaml
