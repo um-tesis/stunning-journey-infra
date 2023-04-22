@@ -15,10 +15,10 @@ spec:
     spec:
       containers:
         - name: nestjs
-          image: jfer11/thesis-backend:v3-release
+          image: jfer11/thesis-backend:latest
           ports:
             - containerPort: 5000
-          # imagePullPolicy: Always
+          imagePullPolicy: Always
           command: ["/bin/sh","-c"]
           args: ["sleep 5; npm install && prisma generate && prisma migrate dev --name init && npm run start:dev"]
           envFrom:
