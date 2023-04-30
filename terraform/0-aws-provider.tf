@@ -1,4 +1,5 @@
 provider "aws" {
+  profile = "fer-libera"  # Create this profile in your environment with aws configure --profile (region = us-east-1 & output = json)
   region = "us-east-1"
 }
 
