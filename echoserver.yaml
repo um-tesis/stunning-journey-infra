@@ -44,8 +44,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: TOBECHANGED  # Cambiar esto por lo que devuelva: kubectl get ingress
-      http:
+    - http:
         paths:
           - path: /
             pathType: Exact
@@ -54,3 +53,4 @@ spec:
                 name: echoserver
                 port:
                   number: 8080
+#   - host: TOBECHANGED  # Cambiar esto por lo que devuelva: kubectl get ingress
