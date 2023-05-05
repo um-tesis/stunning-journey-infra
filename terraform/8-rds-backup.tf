@@ -26,20 +26,9 @@ module "kms" {
   }
 }
 
-# ver la diferencia entre esto y el module
-# resource "aws_kms_key" "default" {
-#   description = "KMS key for cross region automated backups replication"
-
-#   provider = "aws.replica"
-
-#   tags = {
-#     Environment = "production"
-#   }
-# }
-
 resource "aws_db_instance_automated_backups_replication" "default" {
   source_db_instance_arn = module.db.db_instance_arn
-  kms_key_id             = module.kms.key_arn  # aws_kms_key.default.arn
+  kms_key_id             = module.kms.key_arn
   retention_period       = 14
 
   provider = aws.replica
