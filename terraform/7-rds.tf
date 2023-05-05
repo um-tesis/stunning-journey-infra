@@ -34,14 +34,14 @@ module "db" {
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   create_cloudwatch_log_group     = true
 
-  backup_retention_period = 7
-  skip_final_snapshot     = true  # TODO Switch
-  deletion_protection     = false  # TODO Switch
+  backup_retention_period = 7  # Days
+  skip_final_snapshot     = true  # TODO Change to false. For development purposes, we set it to true.
+  deletion_protection     = false  # TODO Change to true. For development purposes, we set it to false.
 
   performance_insights_enabled          = true
-  performance_insights_retention_period = 7
+  performance_insights_retention_period = 7  # Days
   create_monitoring_role                = true
-  monitoring_interval                   = 60
+  monitoring_interval                   = 60  # Seconds
   monitoring_role_name                  = "libera-monitoring-role-name"
   monitoring_role_use_name_prefix       = true
   monitoring_role_description           = "Description for monitoring role"
@@ -74,7 +74,7 @@ module "security_group" {
   version = "~> 4.0"
 
   name        = "libera-postgresql"
-  description = "Complete PostgreSQL example security group"
+  description = "Libera PostgreSQL security group"
   vpc_id      = module.vpc.vpc_id
 
   # ingress
