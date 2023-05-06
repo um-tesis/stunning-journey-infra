@@ -23,7 +23,6 @@ module "db" {
   db_name  = "liberadbname"
   username = "liberadbusername"
   port     = 5432
-  # TODO Ver el tema de la password
 
   multi_az               = true
   db_subnet_group_name   = module.vpc.database_subnet_group
