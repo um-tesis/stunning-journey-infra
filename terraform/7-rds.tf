@@ -23,6 +23,7 @@ module "db" {
   db_name  = "liberadbname"
   username = "liberadbusername"
   port     = 5432
+  publicly_accessible = true
 
   multi_az               = true
   db_subnet_group_name   = module.vpc.database_subnet_group
@@ -77,6 +78,7 @@ module "security_group" {
   vpc_id      = module.vpc.vpc_id
 
   # ingress
+  # also, this needs to be changed to every ip
   ingress_with_cidr_blocks = [
     {
       from_port   = 5432
@@ -86,6 +88,39 @@ module "security_group" {
       cidr_blocks = module.vpc.vpc_cidr_block
     },
   ]
+
+  # TO be publicly accesible, this is not necesarry
+  # egress_with_cidr_blocks = [
+  #   {
+  #     from_port   = 5432
+  #     to_port     = 5432
+  #     protocol    = "tcp"
+  #     description = "PostgreSQL access from within VPC"
+  #     cidr_blocks = module.vpc.vpc_cidr_block
+  #   },
+  # ]
+
+  # egress_with_cidr_blocks
+
+  #   ingress {
+  #   description      = "PG connection"
+  #   from_port        = 5432
+  #   to_port          = 5432
+  #   protocol         = "tcp"
+  #   # cidr_blocks      = [aws_vpc.testvpc.cidr_block]
+  #   # ipv6_cidr_blocks = [aws_vpc.testvpc.ipv6_cidr_block]
+  #   cidr_blocks      = ["0.0.0.0/0"]
+  #   ipv6_cidr_blocks = ["::/0"]
+  # }
+
+  # egress {
+  #   from_port        = 0
+  #   to_port          = 0
+  #   protocol         = "-1"
+  #   cidr_blocks      = ["0.0.0.0/0"]
+  #   ipv6_cidr_blocks = ["::/0"]
+  # }
+
 
   tags = {
     Environment = "production"
