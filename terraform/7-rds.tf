@@ -15,6 +15,7 @@ module "db" {
 
   create_db_option_group = true
   create_db_parameter_group = true
+  # create_db_subnet_group is not added because it is already created in the vpc module.
 
 
   # NOTE: Do NOT use 'user' as the value for 'username' as it throws:
@@ -23,7 +24,6 @@ module "db" {
   db_name  = "liberadbname"
   username = "liberadbusername"
   port     = 5432
-  publicly_accessible = true
 
   multi_az               = true
   db_subnet_group_name   = module.vpc.database_subnet_group
@@ -35,8 +35,8 @@ module "db" {
   create_cloudwatch_log_group     = true
 
   backup_retention_period = 7  # Days
-  skip_final_snapshot     = true  # TODO Change to false. For development purposes, we set it to true.
-  deletion_protection     = false  # TODO Change to true. For development purposes, we set it to false.
+  skip_final_snapshot     = true  # For development purposes, we set it to true. It makes the process faster. TODO Change to false for production.
+  deletion_protection     = false  # For development purposes, we set it to false. It makes the process faster.  TODO Change to true for production.
 
   performance_insights_enabled          = true
   performance_insights_retention_period = 7  # Days
@@ -78,7 +78,6 @@ module "security_group" {
   vpc_id      = module.vpc.vpc_id
 
   # ingress
-  # also, this needs to be changed to every ip
   ingress_with_cidr_blocks = [
     {
       from_port   = 5432
@@ -88,39 +87,6 @@ module "security_group" {
       cidr_blocks = module.vpc.vpc_cidr_block
     },
   ]
-
-  # TO be publicly accesible, this is not necesarry
-  # egress_with_cidr_blocks = [
-  #   {
-  #     from_port   = 5432
-  #     to_port     = 5432
-  #     protocol    = "tcp"
-  #     description = "PostgreSQL access from within VPC"
-  #     cidr_blocks = module.vpc.vpc_cidr_block
-  #   },
-  # ]
-
-  # egress_with_cidr_blocks
-
-  #   ingress {
-  #   description      = "PG connection"
-  #   from_port        = 5432
-  #   to_port          = 5432
-  #   protocol         = "tcp"
-  #   # cidr_blocks      = [aws_vpc.testvpc.cidr_block]
-  #   # ipv6_cidr_blocks = [aws_vpc.testvpc.ipv6_cidr_block]
-  #   cidr_blocks      = ["0.0.0.0/0"]
-  #   ipv6_cidr_blocks = ["::/0"]
-  # }
-
-  # egress {
-  #   from_port        = 0
-  #   to_port          = 0
-  #   protocol         = "-1"
-  #   cidr_blocks      = ["0.0.0.0/0"]
-  #   ipv6_cidr_blocks = ["::/0"]
-  # }
-
 
   tags = {
     Environment = "production"
