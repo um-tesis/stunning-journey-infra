@@ -23,7 +23,7 @@ spec:
           args: ["sleep 5; npm install && prisma generate && prisma migrate dev --name init && npm run start:dev"]
           envFrom:
             - configMapRef:
-                name: backend-secret
+                name: backend-secrets
 
 ---
 apiVersion: v1

@@ -60,6 +60,25 @@ module "eks" {
       source_cluster_security_group = true
       description                   = "Allow access from control plane to webhook port of AWS load balancer controller"
     }
+
+    # ingress_allow_rds_access = {
+    #   type            = "ingress"
+    #   protocol        = "tcp"
+    #   from_port       = 5432
+    #   to_port         = 5432
+    #   source_security_group_id = module.security_group.security_group_id
+    #   description     = "Allow access from EKS nodes to RDS"
+    # }
+
+    egress_allow_rds_access = {
+      type            = "egress"
+      protocol        = "tcp"
+      from_port       = 5432
+      to_port         = 5432
+      source_security_group_id = module.security_group.security_group_id
+      description     = "Allow access from EKS nodes to RDS Second try"
+    }
+
   }
 
   tags = {

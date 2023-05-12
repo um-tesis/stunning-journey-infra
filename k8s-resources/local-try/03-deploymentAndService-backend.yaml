@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: main-project
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nestjs
+  template:
+    metadata:
+      labels:
+        app: nestjs
+    spec:
+      containers:
+        - name: nestjs
+          image: jfer11/thesis-backend:latest
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
+          command: ["/bin/sh","-c"]
+          # args: ["sleep 5"]
+          args: ["sleep 5; npm install && prisma generate && prisma migrate dev --name init && npm run start:dev"]
+          env:
+          - name: NODE_ENV
+            value: development
+          - name: SERVER_PORT
+            value: "5000"
+          - name: SITE_URL
+            value: "http://localhost:5000/"
+          - name: DATABASE_URL
+            value: "postgresql://liberadbusername:bNw6Z7IWsIQK3dnv@postgres-service:5432/liberadbname"  # # value: "postgresql://postgres:postgres@postgres-service:5432/postgres?schema=pubilc"  # ojo con solo poner postgres-service
+          - name: ACCESS_TOKEN_SECRET
+            value: triplej
+          - name: JWT_PRIVATE_KEY
+            value: justanotherprivatekey
+          - name: JWT_PUBLIC_KEY
+            value: notimportant
+          - name: JWT_ALGORITHM
+            value: HS256
+          - name: JWT_EXPIRE_TIME
+            value: "2592000"
+          - name: JWT_EXPIRE_REFRESH_TIME
+            value: "2592000"
+          - name: SALT_ROUNDS
+            value: "10"
+          - name: GRAPHQL_PLAYGROUND
+            value: "true"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: main-project
+  name: backend-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5001
+      targetPort: 5000
+  selector:
+    app: nestjs

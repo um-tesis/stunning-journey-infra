@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap  # This needs to be changed to a Secret kink
 metadata:
   namespace: main-project
-  name: backend-secret
+  name: backend-secrets
 data:
   NODE_ENV: development
   SERVER_PORT: "5000"
