@@ -4,7 +4,7 @@ metadata:
   namespace: main-project
   name: backend-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nestjs
@@ -20,7 +20,8 @@ spec:
             - containerPort: 5000
           imagePullPolicy: Always
           command: ["/bin/sh","-c"]
-          args: ["sleep 5; npm install && prisma generate && prisma migrate dev --name init && npm run start:dev"]
+          # args: ["sleep 5; npm install && prisma generate && prisma migrate dev --name init && npm run start:dev"]
+          args: ["sleep 5; npm ci --ignore-script=prepare && prisma generate && prisma migrate deploy && npm start"]
           envFrom:
             - configMapRef:
                 name: backend-secrets
