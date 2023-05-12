@@ -128,6 +128,7 @@ Before using Minikube, ensure that you have the following prerequisites installe
 minikube start
 ```
 This command will start the Minikube cluster with default configurations.
+
 5. Check Connectivity to Minikube Cluster: After installing **kubectl** and starting **Minikube**, you can verify if **kubectl** is able to reach the **Minikube** cluster by running the following command:
 ```
 kubectl cluster-info
@@ -138,28 +139,26 @@ Make sure to install these prerequisites before proceeding with using Minikube.
 
 ## How to Create Libera Infrastructure in your Local Minikube K8s Cluster from Scratch
 
-To create the cluster, follow these steps:
+#### To create the cluster, follow these steps:
 
-1. Open your terminal and navigate to the root directory.
-2. Execute the following command:
-
+1. Make sure your Minikube cluster is up (`minikube start` was executed) and running (check `minikube status`). Open your terminal and navigate to the root directory of your project.
+2. Execute the following command to create the local Minikube cluster with default configurations:
 ```
 bash create-local-cluster
 ```
+This script will set up the necessary Kubernetes resources within the local Minikube cluster, including deployments, services, pods, and other associated objects.
 
-This script will set up a local Minikube cluster with default configurations.
+#### To delete the cluster and remove all associated resources, follow these steps:
 
-To delete the cluster, follow these steps:
-
-1. Open your terminal and navigate to the root directory.
-2. Execute the following command:
+1. Make sure your Minikube cluster is up (`minikube start` was executed) and running (check `minikube status`). Open your terminal and navigate to the root directory of your project.
+2. Execute the following command to delete the local Minikube cluster:
 ```
 bash delete-local-cluster
 ```
 
-This script will delete the local Minikube cluster, removing all associated resources.
+This script will delete the Kubernetes resources within the local Minikube cluster, including deployments, services, pods, and other associated objects.
 
-Note: Make sure you have fulfilled the prerequisites mentioned above before creating or deleting the local cluster.
+**Note**: Make sure you have fulfilled the prerequisites mentioned above before creating or deleting the local cluster.
 
 ## Useful Commands
 Here are some useful commands for working with Kubernetes and Docker.
