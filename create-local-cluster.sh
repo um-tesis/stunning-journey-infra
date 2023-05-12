@@ -11,7 +11,7 @@ yaml_files=(
     ./k8s-resources/local-minikube-cluster/06-service-postgres.yaml
     ./k8s-resources/local-minikube-cluster/07-configMap-backend.yaml
     ./k8s-resources/local-minikube-cluster/08-deploymentAndService-backend.yaml
-    # ./k8s-resources/local-minikube-cluster/09-deploymentAndService-frontend.yaml
+    ./k8s-resources/local-minikube-cluster/09-deploymentAndService-frontend.yaml
 )
 
 for file in "${yaml_files[@]}"

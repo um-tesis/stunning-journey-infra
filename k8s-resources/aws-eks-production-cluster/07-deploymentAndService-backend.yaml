@@ -20,7 +20,8 @@ spec:
             - containerPort: 5000
           imagePullPolicy: Always
           command: ["/bin/sh", "-c"]
-          args: ["sleep 5; echo 4HOLAADIUUSIUUA44 && npm ci --ignore-script=prepare && echo EREI && prisma generate && prisma migrate deploy && npm start"]
+          args: ["sleep 5; npm ci --ignore-script=prepare && prisma generate && prisma migrate deploy && npm start"]
+          # args: ["sleep 5; npm install && prisma generate && prisma migrate dev --name init && npm run start:dev"]  # TODO: This was the old command
           envFrom:
           - configMapRef:
               name: backend-config-map

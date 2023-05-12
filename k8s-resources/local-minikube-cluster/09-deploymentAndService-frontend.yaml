@@ -20,9 +20,6 @@ spec:
             - containerPort: 3000
           imagePullPolicy: Always
           command: ["npm","run","start"]
-          # envFrom:
-          #   - configMapRef:
-          #       name: frontend-secret
 
 ---
 apiVersion: v1
