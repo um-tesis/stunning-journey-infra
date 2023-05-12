@@ -64,6 +64,54 @@ Working directory: **root directory**.
 
 -----
 
+# Possible changes to the proposed infrastructure
+
+## Public Access to RDS Instances
+
+Note: Enabling public access to RDS instances is not recommended for production environments. Proceed with caution.
+
+To allow public access to RDS instances, you need to make the following modifications to your project:
+
+### **In `1-vpc.tf`:**
+
+Add the following lines:
+
+```
+create_database_subnet_route_table = true
+create_database_internet_gateway_route = true
+```
+
+The following parameters are also required, but they should already be defined:
+
+```hclCopy code
+create_database_subnet_group = true
+enable_dns_hostnames = true
+enable_dns_support = true
+```
+
+### **In `7-rds.tf`:**
+
+Inside the **`ingress_with_cidr_blocks`** block, include the following:
+
+```hclCopy code
+ingress_with_cidr_blocks = [
+  // Existing entries
+  {
+    from_port = 5432
+    to_port = 5432
+    protocol = "tcp"
+    description = "PostgreSQL access from outside the VPC"
+    cidr_blocks = "0.0.0.0/0"
+  },
+]
+```
+
+These changes will enable public access to your RDS instances, allowing incoming connections on port 5432 from any IP address (**`0.0.0.0/0`**) within the VPC.
+
+Remember, public access to RDS instances should only be used for specific scenarios and not for production environments due to security considerations.
+
+-----
+
 # Minikube
 
 ## Useful Commands
