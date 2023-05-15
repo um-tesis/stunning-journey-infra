@@ -57,7 +57,9 @@ Working directory: **root directory**.
 
 9. To add each Libera Kubernetes component run: `<TO BE CREATED>`.
 
------
+## Useful terraform commands
+
+- `terraform output db_instance_password`: It prints the database password (this password may be old, because Terraform doesn't track it after initial creation).
 
 # Minikube
 
