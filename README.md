@@ -57,11 +57,108 @@ Working directory: **root directory**.
 
 9. To add each Libera Kubernetes component run: `<TO BE CREATED>`.
 
+
 ## Useful terraform commands
 
 - `terraform output db_instance_password`: It prints the database password (this password may be old, because Terraform doesn't track it after initial creation).
 
+-----
+
+# Possible changes to the proposed infrastructure
+
+## Public Access to RDS Instances
+
+Note: Enabling public access to RDS instances is not recommended for production environments. Proceed with caution.
+
+To allow public access to RDS instances, you need to make the following modifications to your project:
+
+### **In `1-vpc.tf`:**
+
+Add the following lines:
+
+```
+create_database_subnet_route_table = true
+create_database_internet_gateway_route = true
+```
+
+The following parameters are also required, but they should already be defined:
+
+```hclCopy code
+create_database_subnet_group = true
+enable_dns_hostnames = true
+enable_dns_support = true
+```
+
+### **In `7-rds.tf`:**
+
+Inside the **`ingress_with_cidr_blocks`** block, include the following:
+
+```hclCopy code
+ingress_with_cidr_blocks = [
+  // Existing entries
+  {
+    from_port = 5432
+    to_port = 5432
+    protocol = "tcp"
+    description = "PostgreSQL access from outside the VPC"
+    cidr_blocks = "0.0.0.0/0"
+  },
+]
+```
+
+These changes will enable public access to your RDS instances, allowing incoming connections on port 5432 from any IP address (**`0.0.0.0/0`**) within the VPC.
+
+Remember, public access to RDS instances should only be used for specific scenarios and not for production environments due to security considerations.
+
+-----
+
 # Minikube
+
+Minikube is a tool that allows you to run Kubernetes locally. It provides a single-node Kubernetes cluster on your local machine, making it easier to develop and test applications without the need for a full-scale production cluster.
+
+## Prequisites
+
+Before using Minikube, ensure that you have the following prerequisites installed:
+
+1. Docker. Install Docker by following the instructions provided in the official Docker documentation [here](https://docs.docker.com/get-docker/).
+2. Kubectl. Go to [Kubernetes page > Install Tools](https://kubernetes.io/docs/tasks/tools/), and install **kubectl**. The **Kubernetes command-line tool (kubectl)** allows you to run commands against Kubernetes clusters (in our case, Minikube).
+3. Minikube. Download and install Minikube by visiting the official Minikube documentation [here](https://minikube.sigs.k8s.io/docs/start/). The documentation provides step-by-step instructions for installing Minikube on various operating systems.
+4. Start the Minikube cluster by running the following command:
+```
+minikube start
+```
+This command will start the Minikube cluster with default configurations.
+
+5. Check Connectivity to Minikube Cluster: After installing **kubectl** and starting **Minikube**, you can verify if **kubectl** is able to reach the **Minikube** cluster by running the following command:
+```
+kubectl cluster-info
+```
+This command should display information about the Minikube cluster, including the cluster endpoints and their status. If you see the cluster information, it means that kubectl is successfully communicating with the Minikube cluster. **Note**: Make sure you have started the Minikube cluster using minikube start before running the kubectl cluster-info command. If you encounter any issues or if the cluster information is not displayed, ensure that you have correctly installed kubectl and started the Minikube cluster.
+
+Make sure to install these prerequisites before proceeding with using Minikube.
+
+## How to Create Libera Infrastructure in your Local Minikube K8s Cluster from Scratch
+
+#### To create the cluster, follow these steps:
+
+1. Make sure your Minikube cluster is up (`minikube start` was executed) and running (check `minikube status`). Open your terminal and navigate to the root directory of your project.
+2. Execute the following command to create the local Minikube cluster with default configurations:
+```
+bash create-local-cluster
+```
+This script will set up the necessary Kubernetes resources within the local Minikube cluster, including deployments, services, pods, and other associated objects.
+
+#### To delete the cluster and remove all associated resources, follow these steps:
+
+1. Make sure your Minikube cluster is up (`minikube start` was executed) and running (check `minikube status`). Open your terminal and navigate to the root directory of your project.
+2. Execute the following command to delete the local Minikube cluster:
+```
+bash delete-local-cluster
+```
+
+This script will delete the Kubernetes resources within the local Minikube cluster, including deployments, services, pods, and other associated objects.
+
+**Note**: Make sure you have fulfilled the prerequisites mentioned above before creating or deleting the local cluster.
 
 ## Useful Commands
 Here are some useful commands for working with Kubernetes and Docker.

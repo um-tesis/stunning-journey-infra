@@ -15,7 +15,7 @@ module "db" {
 
   create_db_option_group = true
   create_db_parameter_group = true
-
+  # create_db_subnet_group is not added because it is already created in the vpc module.
 
   # NOTE: Do NOT use 'user' as the value for 'username' as it throws:
   # "Error creating DB Instance: InvalidParameterValue: MasterUsername
@@ -23,7 +23,6 @@ module "db" {
   db_name  = "liberadbname"
   username = "liberadbusername"
   port     = 5432
-  # TODO Ver el tema de la password
 
   multi_az               = true
   db_subnet_group_name   = module.vpc.database_subnet_group
@@ -35,8 +34,8 @@ module "db" {
   create_cloudwatch_log_group     = true
 
   backup_retention_period = 7  # Days
-  skip_final_snapshot     = true  # TODO Change to false. For development purposes, we set it to true.
-  deletion_protection     = false  # TODO Change to true. For development purposes, we set it to false.
+  skip_final_snapshot     = true  # For development purposes, we set it to true. It makes the process faster. TODO Change to false for production.
+  deletion_protection     = false  # For development purposes, we set it to false. It makes the process faster.  TODO Change to true for production.
 
   performance_insights_enabled          = true
   performance_insights_retention_period = 7  # Days
