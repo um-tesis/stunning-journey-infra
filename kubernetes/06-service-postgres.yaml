@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: main-project
+  name: postgres-service
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432  # TODO Change it later to 5433
+      targetPort: 5432
