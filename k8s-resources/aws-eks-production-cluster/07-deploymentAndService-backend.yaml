@@ -13,6 +13,7 @@ spec:
       labels:
         app: nestjs
     spec:
+      serviceAccountName: s3-access
       containers:
         - name: nestjs
           image: jfer11/thesis-backend:latest
