@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: main-project
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      serviceAccountName: s3-access
+      containers:
+      - name: demo-aws-cli
+        image: amazon/aws-cli
+        command: ['sh', '-c']
+        args:
+        - |
+          echo "This is a dummy file." > /dummy.txt && \
+          aws s3 cp /dummy.txt s3://libera-bucket/dummy.txt

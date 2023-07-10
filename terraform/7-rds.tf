@@ -8,10 +8,10 @@ module "db" {
   engine_version       = "14"
   family               = "postgres14" # DB parameter group
   major_engine_version = "14"         # DB option group
-  instance_class       = "db.t4g.large"
+  instance_class       = "db.t4g.large"  # db.t4g.micro
 
-  allocated_storage     = 20
-  max_allocated_storage = 100
+  allocated_storage     = 20  # 7
+  max_allocated_storage = 100  # 7
 
   create_db_option_group = true
   create_db_parameter_group = true
