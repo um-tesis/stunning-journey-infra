@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: demo-aws-cli
   namespace: main-project
 spec:
   selector:
     matchLabels:
-      app: nginx
+      app: demo-aws-cli
   template:
     metadata:
       labels:
-        app: nginx
+        app: demo-aws-cli
     spec:
       serviceAccountName: s3-access
       containers:
@@ -19,5 +19,5 @@ spec:
         command: ['sh', '-c']
         args:
         - |
-          echo "This is a dummy file." > /dummy.txt && \
-          aws s3 cp /dummy.txt s3://libera-bucket/dummy.txt
+          echo "This is a NEW dummy file." > /dummy.txt && \
+          aws s3 cp /dummy.txt s3://libera-bucket/dummy.txt --acl public-read

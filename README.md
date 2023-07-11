@@ -110,6 +110,25 @@ These changes will enable public access to your RDS instances, allowing incoming
 
 Remember, public access to RDS instances should only be used for specific scenarios and not for production environments due to security considerations.
 
+### **In `test_s3.yaml`:**
+
+#### Test Deployment
+To test s3 bucket, we've also introduced a new Kubernetes Deployment for testing our configuration. This deployment is defined in the test_s3.yaml file.
+
+This Deployment, named demo-aws-cli, is designed to confirm that our Service Account setup is correctly providing access to the S3 bucket. Here's how it works:
+
+The Deployment creates a pod with a single container running the amazon/aws-cli image, which includes the AWS command-line interface.
+
+The container is configured to use the s3-access Service Account, which is associated with the IAM role that has access to the S3 bucket.
+
+The container then executes a command (on startup) that creates a new file, dummy.txt, and attempts to upload this file to our S3 bucket.
+
+#### Testing Bucket Access
+
+This upload operation serves as a test of our setup. If the IAM role and Service Account have been configured correctly, the container should be able to upload the file to the S3 bucket without any issues. If there are problems with the IAM configuration, the upload operation will fail, and we can use this failure to diagnose the issue.
+
+The AWS CLI command that uploads the file (aws s3 cp) also includes the --acl public-read flag. This flag sets the uploaded file's Access Control List (ACL) to public-read, which allows all users (including unauthenticated ones) to read the file. This means that we can verify the upload's success by attempting to download the file from the S3 bucket ourselves with https://libera-bucket.s3.amazonaws.com/dummy.txt
+
 -----
 
 # Minikube
