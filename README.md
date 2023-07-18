@@ -45,7 +45,7 @@ At this point, your Kubernetes cluster has been created BUT is still empty. To v
 
 Working directory: **root directory**.
 
-5. Execute `kubectl apply -f echoserver.yaml`. to schedule the echoserver. After a few minutes, it should be created.
+5. Execute `kubectl apply -f ./testing-files/echoserver.yaml`. to schedule the echoserver. After a few minutes, it should be created.
 6. Run: `kubectl get ingress`. This will give you information such as NAME, CLASS, HOSTS ADDRESS, PORTS and AGE. You need to copy the ADDRESS. *Ex: k8s-default-echoserv-798f5770a5-767024838.us-east-1.elb.amazonaws.com*
 7. Paste the ADDRESS into your browser, and if you receive a proper response, your cluster is working correctly.
 
@@ -53,7 +53,7 @@ At this point, you have validated that the cluster is working as expected. Now, 
 
 Working directory: **root directory**.
 
-8. To remove the echoserver execute: `kubectl delete -f echoserver.yaml`.
+8. To remove the echoserver execute: `kubectl delete -f ./testing-files/echoserver.yaml`.
 
 9. To add each Libera Kubernetes component run: `<TO BE CREATED>`.
 
@@ -109,6 +109,25 @@ ingress_with_cidr_blocks = [
 These changes will enable public access to your RDS instances, allowing incoming connections on port 5432 from any IP address (**`0.0.0.0/0`**) within the VPC.
 
 Remember, public access to RDS instances should only be used for specific scenarios and not for production environments due to security considerations.
+
+### **In `test_s3.yaml`:**
+
+#### Test Deployment
+To test s3 bucket, we've also introduced a new Kubernetes Deployment for testing our configuration. This deployment is defined in the test_s3.yaml file.
+
+This Deployment, named demo-aws-cli, is designed to confirm that our Service Account setup is correctly providing access to the S3 bucket. Here's how it works:
+
+The Deployment creates a pod with a single container running the amazon/aws-cli image, which includes the AWS command-line interface.
+
+The container is configured to use the s3-access Service Account, which is associated with the IAM role that has access to the S3 bucket.
+
+The container then executes a command (on startup) that creates a new file, dummy.txt, and attempts to upload this file to our S3 bucket.
+
+#### Testing Bucket Access
+
+This upload operation serves as a test of our setup. If the IAM role and Service Account have been configured correctly, the container should be able to upload the file to the S3 bucket without any issues. If there are problems with the IAM configuration, the upload operation will fail, and we can use this failure to diagnose the issue.
+
+The AWS CLI command that uploads the file (aws s3 cp) also includes the --acl public-read flag. This flag sets the uploaded file's Access Control List (ACL) to public-read, which allows all users (including unauthenticated ones) to read the file. This means that we can verify the upload's success by attempting to download the file from the S3 bucket ourselves with https://libera-bucket.s3.amazonaws.com/dummy.txt
 
 -----
 
