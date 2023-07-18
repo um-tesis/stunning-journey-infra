@@ -8,7 +8,7 @@ module "db" {
   engine_version       = "14"
   family               = "postgres14" # DB parameter group
   major_engine_version = "14"         # DB option group
-  instance_class       = "db.t4g.micro"  # # For development purposes. The old values was "db.t4g.large". They were lowered to reduce costs during development. TODO Change to 100 for production.
+  instance_class       = "db.t4g.micro"  # For development purposes. The old values was "db.t4g.large". It was lowered to reduce costs during development. TODO Change to "db.t4g.large" for production.
 
   allocated_storage     = 7  # For development purposes. The old values was 20. They were lowered to reduce costs during development. TODO Change to 20 for production.
   max_allocated_storage = 7  # For development purposes. The old values was 100. They were lowered to reduce costs during development. TODO Change to 100 for production.
