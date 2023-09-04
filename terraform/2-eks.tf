@@ -19,8 +19,8 @@ module "eks" {
 
   eks_managed_node_groups = {
     general = {
-      desired_size = 2
-      min_size     = 2
+      desired_size = 1
+      min_size     = 1
       max_size     = 10
 
       labels = {
@@ -32,8 +32,8 @@ module "eks" {
     }
 
     spot = {
-      desired_size = 1
-      min_size     = 1
+      desired_size = 0
+      min_size     = 0
       max_size     = 10
 
       labels = {

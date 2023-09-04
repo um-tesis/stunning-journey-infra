@@ -4,7 +4,14 @@ metadata:
   namespace: main-project
   name: frontend-config-map
 data:
+  # Generals
   SERVER_API_URL: http://localhost:5001/graphql  # TODO: Change this
   NEXT_PUBLIC_API_URL: http://localhost:5001/graphql  # TODO: Change this
+  NEXT_PUBLIC_APP_BASE_URL: http://localhost:3000
   ENV: production
   NEXT_PUBLIC_ENV: production
+  NEXT_PUBLIC_YOUTUBE_API_KEY: AIzaSyDRxpLitDfZbxJvJGnotByY_cGuR8OU3AM
+  # AWS Demo Bucket
+  AWS_ACCESS_KEY_ID: AKIA3OJWYLZ4JT6L6OXO
+  AWS_S3_REGION: us-east-1
+  NEXT_PUBLIC_AWS_BUCKET_NAME: projects-cover-photos

@@ -1,5 +1,6 @@
 module "db" {
   source  = "terraform-aws-modules/rds/aws"
+  version = "5.9.0"
 
   identifier = "libera-postgresql"
 

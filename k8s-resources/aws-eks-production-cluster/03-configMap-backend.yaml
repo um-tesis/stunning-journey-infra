@@ -4,13 +4,31 @@ metadata:
   namespace: main-project
   name: backend-config-map
 data:
+  # Generals
   NODE_ENV: production
   SERVER_PORT: "5000"
   SITE_URL: "http://localhost:5000/"  # This must match SERVER_PORT.
-  DATABASE_URL: "postgresql://liberadbusername:bNw6Z7IWsIQK3dnv@postgres-service:5432/liberadbname"
+  # Database
+  DATABASE_URL: "postgresql://liberadbusername:yucPoYXKMPzZqeM4@postgres-service:5432/liberadbname"  # TODO: Move to secrets instead.
+  # Jwt options
   JWT_ALGORITHM: HS256
   JWT_EXPIRE_TIME: "2592000"
   JWT_EXPIRE_REFRESH_TIME: "2592000"
   SALT_ROUNDS: "10"
+  # Graphql options
   GRAPHQL_PLAYGROUND: "true"
+  # Nodemailer
   LIBERA_EMAIL_ACCOUNT: librera.emailing@gmail.com
+  # Badgr
+  BADGR_USERNAME: librera.emailing@gmail.com
+  BADGR_ISSUER_ID: oD3ENjheSKaHFxoof2Fvqg
+  BADGR_BASIC_BADGE_ID: b1BhuzhfTZqYZIgxcoQiaA
+  BADGR_BRONZE_BADGE_ID: Y-4-fYc1SlelgBaeEt5b2A
+  BADGR_SILVER_BADGE_ID: -nDa3KbvQkO6wREq3NgMPA
+  BADGR_GOLD_BADGE_ID: LJkxdIksQtGvUrdRKNPmrQ
+  BADGR_API_URL: https://api.badgr.io/v2
+  # Mercadopago
+  TEST_MP_PUBLIC_KEY: "TEST-50de8e2b-5eb0-44ea-8958-c40624b79631"
+  # AWS Demo Bucket
+  AWS_ACCESS_KEY_ID: AKIA3OJWYLZ4JT6L6OXO
+  AWS_BUCKET_NAME: projects-cover-photos

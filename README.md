@@ -45,7 +45,7 @@ At this point, your Kubernetes cluster has been created BUT is still empty. To v
 
 Working directory: **root directory**.
 
-5. Execute `kubectl apply -f ./testing-files/echoserver.yaml`. to schedule the echoserver. After a few minutes, it should be created.
+5. Execute `kubectl apply -f ./k8s-resources/testing-files/echoserver.yaml`. to schedule the echoserver. After a few minutes, it should be created.
 6. Run: `kubectl get ingress`. This will give you information such as NAME, CLASS, HOSTS ADDRESS, PORTS and AGE. You need to copy the ADDRESS. *Ex: k8s-default-echoserv-798f5770a5-767024838.us-east-1.elb.amazonaws.com*
 7. Paste the ADDRESS into your browser, and if you receive a proper response, your cluster is working correctly.
 
@@ -53,7 +53,7 @@ At this point, you have validated that the cluster is working as expected. Now, 
 
 Working directory: **root directory**.
 
-8. To remove the echoserver execute: `kubectl delete -f ./testing-files/echoserver.yaml`.
+8. To remove the echoserver execute: `kubectl delete -f ./k8s-resources/testing-files/echoserver.yaml`.
 
 9. To add each Libera Kubernetes component run: `<TO BE CREATED>`.
 
@@ -212,6 +212,8 @@ Here are some useful commands for working with Kubernetes and Docker.
 - To expose a LoadBalancer service port to the outside, run:
 
   `minikube service backend-service -n main-project --url`
+
+- If terraform fails with `aws_db_instance_automated_backups_replication`, it is probably caused by https://github.com/hashicorp/terraform-provider-aws/issues/32597. Run `terraform untaint aws_db_instance_automated_backups_replication.default` and then run `terraform apply` again.
 
 ## Building and Pushing Images to Dockerhub
 
