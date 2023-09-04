@@ -4,17 +4,13 @@ metadata:
   name: ingress-libera
   namespace: main-project
   annotations:
+    kubernetes.io/ingress.class: "alb"
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    # by default, it will create a listener rule on port 80
-    # you can specify both ports as well like this: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'  # Or just '[{"HTTPS": 443}]', creo que es mejor poner solo este.
-    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:411686525067:certificate/8adf7812-a1af-4eae-af1b-ea425a238a67
-    # # alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-1-2017-01 #Optional (Picks default if not used)    
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:786630729336:certificate/eee6c540-49dd-4f66-a515-a742b7d9ca63
 spec:
-  ingressClassName: alb
   rules:
-    # - host: ssldemo.kubeoncloud.com    # SSL Setting (Optional only if we are not using certificate-arn annotation)
     - http:
         paths:
           - path: /
@@ -24,4 +20,3 @@ spec:
                 name: frontend-service
                 port:
                   number: 3001
-#   - host: TOBECHANGED  # Cambiar esto por lo que devuelva: kubectl get ingress
